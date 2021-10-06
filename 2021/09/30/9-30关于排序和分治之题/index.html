@@ -1,321 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>9.30关于排序和分治之题 - Risotoonero&#039;s blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Risotoonero&#039;s blog"><meta name="msapplication-TileImage" content="/img/logo.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Risotoonero&#039;s blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="leetcode算法面试题排序与索引最大数把数字转化为字符串，把两个字符串拼接起来，用字符串来进行比较和排序"><meta property="og:type" content="blog"><meta property="og:title" content="9.30关于排序和分治之题"><meta property="og:url" content="https://risotoonero.github.io/2021/09/30/9-30%E5%85%B3%E4%BA%8E%E6%8E%92%E5%BA%8F%E5%92%8C%E5%88%86%E6%B2%BB%E4%B9%8B%E9%A2%98/"><meta property="og:site_name" content="Risotoonero&#039;s blog"><meta property="og:description" content="leetcode算法面试题排序与索引最大数把数字转化为字符串，把两个字符串拼接起来，用字符串来进行比较和排序"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://risotoonero.github.io/2021/09/30/9-30%E5%85%B3%E4%BA%8E%E6%8E%92%E5%BA%8F%E5%92%8C%E5%88%86%E6%B2%BB%E4%B9%8B%E9%A2%98/te.jpg"><meta property="og:image" content="https://risotoonero.github.io/2021/09/30/9-30%E5%85%B3%E4%BA%8E%E6%8E%92%E5%BA%8F%E5%92%8C%E5%88%86%E6%B2%BB%E4%B9%8B%E9%A2%98/test.jpg"><meta property="article:published_time" content="2021-09-30T10:29:58.000Z"><meta property="article:modified_time" content="2021-10-01T15:43:56.214Z"><meta property="article:author" content="Risotoonero"><meta property="article:tag" content="算法心得"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/2021/09/30/9-30%E5%85%B3%E4%BA%8E%E6%8E%92%E5%BA%8F%E5%92%8C%E5%88%86%E6%B2%BB%E4%B9%8B%E9%A2%98/te.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://risotoonero.github.io/2021/09/30/9-30%E5%85%B3%E4%BA%8E%E6%8E%92%E5%BA%8F%E5%92%8C%E5%88%86%E6%B2%BB%E4%B9%8B%E9%A2%98/"},"headline":"9.30关于排序和分治之题","image":["https://risotoonero.github.io/2021/09/30/9-30%E5%85%B3%E4%BA%8E%E6%8E%92%E5%BA%8F%E5%92%8C%E5%88%86%E6%B2%BB%E4%B9%8B%E9%A2%98/te.jpg","https://risotoonero.github.io/2021/09/30/9-30%E5%85%B3%E4%BA%8E%E6%8E%92%E5%BA%8F%E5%92%8C%E5%88%86%E6%B2%BB%E4%B9%8B%E9%A2%98/test.jpg"],"datePublished":"2021-09-30T10:29:58.000Z","dateModified":"2021-10-01T15:43:56.214Z","author":{"@type":"Person","name":"Risotoonero"},"publisher":{"@type":"Organization","name":"Risotoonero's blog","logo":{"@type":"ImageObject","url":"https://risotoonero.github.io/img/comment_bg.png"}},"description":"leetcode算法面试题排序与索引最大数把数字转化为字符串，把两个字符串拼接起来，用字符串来进行比较和排序"}</script><link rel="canonical" href="https://risotoonero.github.io/2021/09/30/9-30%E5%85%B3%E4%BA%8E%E6%8E%92%E5%BA%8F%E5%92%8C%E5%88%86%E6%B2%BB%E4%B9%8B%E9%A2%98/"><link rel="icon" href="/img/logo.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><meta name="generator" content="Hexo 5.4.0"></head><script src="js/clicklove.js"></script><body class="is-3-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/comment_bg.png" alt="Risotoonero&#039;s blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-09-30T10:29:58.000Z" title="2021/9/30下午6:29:58">2021-09-30</time></span><span class="level-item">Updated&nbsp;<time dateTime="2021-10-01T15:43:56.214Z" title="2021/10/1下午11:43:56">2021-10-01</time></span><span class="level-item"><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a></span><span class="level-item">7 minutes read (About 1003 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">9.30关于排序和分治之题</h1><div class="content"><h1 id="leetcode算法面试题排序与索引"><a href="#leetcode算法面试题排序与索引" class="headerlink" title="leetcode算法面试题排序与索引"></a>leetcode算法面试题排序与索引</h1><h2 id="最大数"><a href="#最大数" class="headerlink" title="最大数"></a>最大数</h2><p>把数字转化为字符串，把两个字符串拼接起来，用字符串来进行比较和排序</p>
+<span id="more"></span>
 
-
-
-  
-
-
-<html class="theme-next gemini use-motion" lang="en">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-<meta name="theme-color" content="#222">
-
-
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="算法心得," />
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="leetcode算法面试题排序与索引最大数把数字转化为字符串，把两个字符串拼接起来，用字符串来进行比较和排序 摆动排序用快排排好后，逆序穿插，把第一大，第二大插到数组第1位，第3位，插到末尾就把剩下逆序插到第0位，第2位，保证摆动。至于为什么这样可以保证搞不懂。 寻找重复数忽略了题目的一个条件，所有数都在1到n之间。所以二分法查询的不是位置，而是1-n的数。比这个数小的，不能大于这个数，因为要没有">
-<meta property="og:type" content="article">
-<meta property="og:title" content="9.30关于排序和分治之题">
-<meta property="og:url" content="https://risotoonero.github.io/2021/09/30/9-30%E5%85%B3%E4%BA%8E%E6%8E%92%E5%BA%8F%E5%92%8C%E5%88%86%E6%B2%BB%E4%B9%8B%E9%A2%98/index.html">
-<meta property="og:site_name" content="Risotoonero&#39;s blog">
-<meta property="og:description" content="leetcode算法面试题排序与索引最大数把数字转化为字符串，把两个字符串拼接起来，用字符串来进行比较和排序 摆动排序用快排排好后，逆序穿插，把第一大，第二大插到数组第1位，第3位，插到末尾就把剩下逆序插到第0位，第2位，保证摆动。至于为什么这样可以保证搞不懂。 寻找重复数忽略了题目的一个条件，所有数都在1到n之间。所以二分法查询的不是位置，而是1-n的数。比这个数小的，不能大于这个数，因为要没有">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://risotoonero.github.io/.io//111.jpg">
-<meta property="og:image" content="https://risotoonero.github.io/.io//222.jpg">
-<meta property="article:published_time" content="2021-09-30T10:29:58.000Z">
-<meta property="article:modified_time" content="2021-09-30T11:44:47.105Z">
-<meta property="article:author" content="Risotoonero">
-<meta property="article:tag" content="算法心得">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://risotoonero.github.io/.io//111.jpg">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '',
-    scheme: 'Gemini',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: 'Author'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="https://risotoonero.github.io/2021/09/30/9-30关于排序和分治之题/"/>
-
-
-
-
-
-  <title>9.30关于排序和分治之题 | Risotoonero's blog</title>
-  
-
-
-
-
-
-
-
-
-<meta name="generator" content="Hexo 5.4.0"></head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="en">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Risotoonero's blog</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle"></p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/%20" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            Home
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/%20" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            Archives
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
-</nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://risotoonero.github.io/2021/09/30/9-30%E5%85%B3%E4%BA%8E%E6%8E%92%E5%BA%8F%E5%92%8C%E5%88%86%E6%B2%BB%E4%B9%8B%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Risotoonero's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">9.30关于排序和分治之题</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-30T18:29:58+08:00">
-                2021-09-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h1 id="leetcode算法面试题排序与索引"><a href="#leetcode算法面试题排序与索引" class="headerlink" title="leetcode算法面试题排序与索引"></a>leetcode算法面试题排序与索引</h1><h2 id="最大数"><a href="#最大数" class="headerlink" title="最大数"></a>最大数</h2><p>把数字转化为字符串，把两个字符串拼接起来，用字符串来进行比较和排序</p>
 <h2 id="摆动排序"><a href="#摆动排序" class="headerlink" title="摆动排序"></a>摆动排序</h2><p>用快排排好后，逆序穿插，把第一大，第二大插到数组第1位，第3位，插到末尾就把剩下逆序插到第0位，第2位，保证摆动。至于为什么这样可以保证搞不懂。</p>
 <h2 id="寻找重复数"><a href="#寻找重复数" class="headerlink" title="寻找重复数"></a>寻找重复数</h2><p>忽略了题目的一个条件，所有数都在1到n之间。所以二分法查询的不是位置，而是1-n的数。比这个数小的，不能大于这个数，因为要没有重复。如果大过了，就证明在0-这个数之间有数重复，所以在这个区间上找。如果没有重复的话，就在n-len这个区间上找。</p>
 <p>如果寻找的是不重复数，可以直接用位运算，一个数与0异或等于它本身，两个相同数异或等于0。</p>
 <h2 id="寻找峰值"><a href="#寻找峰值" class="headerlink" title="寻找峰值"></a>寻找峰值</h2><p>看不透问题的本质，直接用这个数是否大于左边，是否大于右边来算，用二分法不能判断最大数在哪个区间，只能左边区间和右边区间同样递归，时间复杂度反而是指数了，而且边界条件根本判断不了。其实普通的二分法，要求最大数，只要右边这个数不能大于它就行了。大于它的话说明还有数比它大，所以右边区间一定有最大数，不用管左边区间有没有最大数。否则这个数也许是最大数，就在左边找。真的为自己的智商堪忧。</p>
 <h1 id="算法实验课"><a href="#算法实验课" class="headerlink" title="算法实验课"></a>算法实验课</h1><h2 id="两个有序序列的中位数-分治"><a href="#两个有序序列的中位数-分治" class="headerlink" title="两个有序序列的中位数(分治)"></a>两个有序序列的中位数(分治)</h2><p>时间复杂度为log(n)，首先基本思想因为两个数组已经排好，而且求中位数，所以比较两个数组的中间元素，要是相等，则因为都是中位数，这两个数一定挨在一起，则整体的中位数必定是这个数，所以直接返回这个数。具体看下图</p>
-<p><img src="/.io//111.jpg"></p>
+<p><img src="/2021/09/30/9-30%E5%85%B3%E4%BA%8E%E6%8E%92%E5%BA%8F%E5%92%8C%E5%88%86%E6%B2%BB%E4%B9%8B%E9%A2%98/te.jpg"></p>
 <p>所以基本思路就是这样。为了保证递归的时候两个子数组长度相等，对mid可以这样处理</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mid1=(la+ua)/<span class="number">2</span>;</span><br><span class="line">mid2=(lb+ub+<span class="number">1</span>)/<span class="number">2</span>;</span><br></pre></td></tr></table></figure>
 
 <p>这样的意思是若出现一个偶数组一个奇数组，得到的中间位置一样。</p>
 <p>因为保证两数组长度一样，会出现数组只有两个的情况，如果按上面的方法会出现</p>
-<p><img src="/.io//222.jpg"></p>
+<p><img src="/2021/09/30/9-30%E5%85%B3%E4%BA%8E%E6%8E%92%E5%BA%8F%E5%92%8C%E5%88%86%E6%B2%BB%E4%B9%8B%E9%A2%98/test.jpg"></p>
 <p>造成死循环。所以进行处理</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mid1=(la+ua)/<span class="number">2</span>;</span><br><span class="line">mid2=(lb+ub)/<span class="number">2</span>;</span><br></pre></td></tr></table></figure>
 
@@ -326,378 +24,66 @@
 <p>完整代码如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">100005</span>];</span><br><span class="line"><span class="keyword">int</span> b[<span class="number">100005</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binary</span><span class="params">(<span class="keyword">int</span> la,<span class="keyword">int</span> ua,<span class="keyword">int</span> lb,<span class="keyword">int</span> ub)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> mid1=(la+ua)/<span class="number">2</span>,mid2=(lb+ub+<span class="number">1</span>)/<span class="number">2</span>;</span><br><span class="line">	<span class="keyword">if</span>(la==ua&amp;&amp;lb!=ub)&#123;</span><br><span class="line">		<span class="keyword">if</span>(a[la]&gt;b[ub])&#123;</span><br><span class="line">			<span class="keyword">return</span> b[ub];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> a[la];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(la!=ua&amp;&amp;lb==ub)&#123;</span><br><span class="line">		<span class="keyword">if</span>(a[ua]&lt;b[ub])&#123;</span><br><span class="line">			<span class="keyword">return</span> a[ua];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> b[ub];</span><br><span class="line">	&#125;	</span><br><span class="line">	<span class="keyword">if</span>(la==ua&amp;&amp;lb==ub)&#123;</span><br><span class="line">		<span class="keyword">if</span>(a[la]&gt;b[lb])&#123;</span><br><span class="line">			<span class="keyword">return</span> b[lb];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> a[la];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(la+<span class="number">1</span>==ua&amp;&amp;lb+<span class="number">1</span>==ub)&#123;</span><br><span class="line">			mid1=(la+ua)/<span class="number">2</span>;</span><br><span class="line">			mid2=(lb+ub)/<span class="number">2</span>;</span><br><span class="line">		&#125; </span><br><span class="line">		<span class="keyword">if</span>(a[mid1]==b[mid2])&#123;</span><br><span class="line">			<span class="keyword">return</span> a[mid1];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(a[mid1]&lt;b[mid2])&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="built_in">binary</span>(mid1,ua,lb,mid2);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(a[mid1]&gt;b[mid2])&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="built_in">binary</span>(la,mid1,mid2,ub);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	cin&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		cin&gt;&gt;a[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		cin&gt;&gt;b[i];</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;<span class="built_in">binary</span>(<span class="number">0</span>,n<span class="number">-1</span>,<span class="number">0</span>,n<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" rel="tag"># 算法心得</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
+</div><div class="article-licensing box"><div class="licensing-title"><p>9.30关于排序和分治之题</p><p><a href="https://risotoonero.github.io/2021/09/30/9-30关于排序和分治之题/">https://risotoonero.github.io/2021/09/30/9-30关于排序和分治之题/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Risotoonero</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2021-09-30</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2021-10-01</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/">算法心得</a></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css"><div class="social-share"></div><script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Like this article? Support the author with</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>Alipay</span><span class="qrcode"><img src="/img/alipay.jpg" alt="Alipay"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>Wechat</span><span class="qrcode"><img src="/img/wechat.png" alt="Wechat"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2021/10/02/Hexo-icarus/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Hexo+icarus</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/09/29/hello-world/"><span class="level-item">Hello World</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div class="content" id="valine-thread"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread',
+            appId: "WujQn4aGhBgcokn2S0xauI53-gzGzoHsz",
+            appKey: "CJKGCWmtRoqidM1QsBUf1AQR",
             
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
+            avatar: "mm",
+            avatarForce: false,
+            meta: ["nick","mail","link"],
+            pageSize: 10,
+            lang: "en",
+            visitor: false,
+            highlight: true,
+            recordIP: false,
             
-              <a href="/2021/09/30/hello-world/" rel="prev" title="Hello World">
-                Hello World <i class="fa fa-chevron-right"></i>
-              </a>
             
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <p class="site-author-name" itemprop="name"></p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/%20%7C%7C%20archive">
-              
-                  <span class="site-state-item-count">2</span>
-                  <span class="site-state-item-name">posts</span>
-                </a>
-              </div>
-            
-
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                
-                  <span class="site-state-item-count">1</span>
-                  <span class="site-state-item-name">tags</span>
-                
-              </div>
-            
-
-          </nav>
-
-          
-
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#leetcode%E7%AE%97%E6%B3%95%E9%9D%A2%E8%AF%95%E9%A2%98%E6%8E%92%E5%BA%8F%E4%B8%8E%E7%B4%A2%E5%BC%95"><span class="nav-number">1.</span> <span class="nav-text">leetcode算法面试题排序与索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%A4%A7%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">最大数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%86%E5%8A%A8%E6%8E%92%E5%BA%8F"><span class="nav-number">1.2.</span> <span class="nav-text">摆动排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BB%E6%89%BE%E9%87%8D%E5%A4%8D%E6%95%B0"><span class="nav-number">1.3.</span> <span class="nav-text">寻找重复数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BB%E6%89%BE%E5%B3%B0%E5%80%BC"><span class="nav-number">1.4.</span> <span class="nav-text">寻找峰值</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E9%AA%8C%E8%AF%BE"><span class="nav-number">2.</span> <span class="nav-text">算法实验课</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E5%BA%8F%E5%88%97%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0-%E5%88%86%E6%B2%BB"><span class="nav-number">2.1.</span> <span class="nav-text">两个有序序列的中位数(分治)</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Risotoonero</span>
-
-  
-</div>
-
-
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
-
-
-
-
-        
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
-
-</body>
-</html>
+            enableQQ: false,
+            requiredFields: [],
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/head.png" alt="Risotoonero"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Risotoonero</p><p class="is-size-6 is-block">所有悲伤过后，又是全新的旅程</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>China,Guangzhou</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">5</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">4</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">5</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/risotoonero.github.io" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/risotoonero.github.io"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Facebook" href="https://facebook.com"><i class="fab fa-facebook"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com"><i class="fab fa-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Dribbble" href="https://dribbble.com"><i class="fab fa-dribbble"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list"><li><a class="level is-mobile" href="#leetcode算法面试题排序与索引"><span class="level-left"><span class="level-item">1</span><span class="level-item">leetcode算法面试题排序与索引</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#最大数"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">最大数</span></span></a></li><li><a class="level is-mobile" href="#摆动排序"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">摆动排序</span></span></a></li><li><a class="level is-mobile" href="#寻找重复数"><span class="level-left"><span class="level-item">1.3</span><span class="level-item">寻找重复数</span></span></a></li><li><a class="level is-mobile" href="#寻找峰值"><span class="level-left"><span class="level-item">1.4</span><span class="level-item">寻找峰值</span></span></a></li></ul></li><li><a class="level is-mobile" href="#算法实验课"><span class="level-left"><span class="level-item">2</span><span class="level-item">算法实验课</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#两个有序序列的中位数-分治"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">两个有序序列的中位数(分治)</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/hexo/"><span class="level-start"><span class="level-item">hexo</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%8D%9A%E5%AE%A2/"><span class="level-start"><span class="level-item">博客</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">算法</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/"><span class="level-start"><span class="level-item">编程</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></div></div></div><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">Links</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://google.com" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Google</span></span><span class="level-right"><span class="level-item tag">google.com</span></span></a></li><li><a class="level is-mobile" href="https://baidu.com" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Baidu</span></span><span class="level-right"><span class="level-item tag">baidu.com</span></span></a></li></ul></div></div></div><div class="column-right-shadow is-hidden-widescreen"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-10-05T06:07:11.000Z">2021-10-05</time></p><p class="title"><a href="/2021/10/05/10-5%E5%8A%A8%E8%A7%84/">10-5动规</a></p><p class="categories"><a href="/categories/%E7%AE%97%E6%B3%95/">算法</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-10-01T16:15:01.000Z">2021-10-02</time></p><p class="title"><a href="/2021/10/02/Hexo-icarus/">Hexo+icarus</a></p><p class="categories"><a href="/categories/%E5%8D%9A%E5%AE%A2/">博客</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-09-30T10:29:58.000Z">2021-09-30</time></p><p class="title"><a href="/2021/09/30/9-30%E5%85%B3%E4%BA%8E%E6%8E%92%E5%BA%8F%E5%92%8C%E5%88%86%E6%B2%BB%E4%B9%8B%E9%A2%98/">9.30关于排序和分治之题</a></p><p class="categories"><a href="/categories/%E7%BC%96%E7%A8%8B/">编程</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-09-29T10:29:58.000Z">2021-09-29</time></p><p class="title"><a href="/2021/09/29/hello-world/">Hello World</a></p><p class="categories"><a href="/categories/hexo/">hexo</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-05-23T10:29:58.000Z">2021-05-23</time></p><p class="title"><a href="/2021/05/23/DS-ch6/">DS-ch6</a></p><p class="categories"><a href="/categories/%E7%BC%96%E7%A8%8B/">编程</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2021/10/"><span class="level-start"><span class="level-item">October 2021</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/09/"><span class="level-start"><span class="level-item">September 2021</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/05/"><span class="level-start"><span class="level-item">May 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"><span class="tag">动态规划</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E5%AE%A2/"><span class="tag">博客</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"><span class="tag">博客搭建</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><span class="tag">数据结构</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/"><span class="tag">算法心得</span><span class="tag">1</span></a></div></div></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/comment_bg.png" alt="Risotoonero&#039;s blog" height="28"></a><p class="is-size-7"><span>&copy; 2021 Risotoonero</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
